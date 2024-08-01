@@ -5,7 +5,7 @@ import Foundation
 import UIKit
 
 public class reelsView {
-    public static func createReelsView(frame: CGRect) -> Reels {
-        return Reels(frame: frame)
+    public static func createReelsView(frame: CGRect, videos: [String]) -> Reels {
+        return Reels(frame: frame, videoNames: videos)
     }
 }

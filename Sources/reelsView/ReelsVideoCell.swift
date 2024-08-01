@@ -10,43 +10,36 @@ import UIKit
 import AVKit
 
 public class ReelsVideoCell: UICollectionViewCell {
-    
-    public var player: AVPlayer?
     private var playerLayer: AVPlayerLayer?
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupPlayerLayer()
     }
-    
+
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupPlayerLayer()
+        fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupPlayerLayer() {
-        playerLayer = AVPlayerLayer(player: player)
+        playerLayer = AVPlayerLayer()
+        playerLayer?.frame = self.contentView.bounds
         playerLayer?.videoGravity = .resizeAspectFill
-        if let playerLayer = playerLayer {
-            layer.addSublayer(playerLayer)
+        self.contentView.layer.addSublayer(playerLayer!)
+    }
+
+    func configure(with videoName: String) {
+        guard let url = Bundle.main.url(forResource: videoName, withExtension: "mp4") else {
+            print("Video file \(videoName).mp4 not found in bundle")
+            return
         }
-    }
-    
-    public func configure(with url: URL) {
-        player = AVPlayer(url: url)
+        let player = AVPlayer(url: url)
         playerLayer?.player = player
-        player?.play()
+        player.play()
     }
-    
+
     public override func prepareForReuse() {
         super.prepareForReuse()
-        player?.pause()
-        player = nil
         playerLayer?.player = nil
-    }
-    
-    override public func layoutSubviews() {
-        super.layoutSubviews()
-        playerLayer?.frame = bounds
     }
 }

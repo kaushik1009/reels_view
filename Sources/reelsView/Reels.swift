@@ -8,8 +8,8 @@
 import UIKit
 import AVFoundation
 
-public protocol ReelIndex {
-    func updateReelIndex(_ index: Int)
+public protocol ReelIndexDelegate: AnyObject {
+    func didUpdateVisibleIndex(_ indexPath: IndexPath)
 }
 
 // This view is responsible for constructing the collection view and logic for rending the AVPlayer on each collection view cells
@@ -20,7 +20,7 @@ public class Reels: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     private var playerLayer: AVPlayerLayer?
     private var player: AVPlayer?
     private var videoNames: [Any]
-    public var delegate: ReelIndex?
+    public weak var delegate: ReelIndexDelegate?
 
     public init(frame: CGRect, videoNames: [Any]) {
         self.videoNames = videoNames
@@ -61,7 +61,7 @@ public class Reels: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let cell = cell as? ReelsVideoCell else { return }
         cell.configure(with: videoNames[indexPath.row])
-        delegate?.updateReelIndex(indexPath.row)
+        delegate?.didUpdateVisibleIndex(indexPath)
         cell.play()
     }
 

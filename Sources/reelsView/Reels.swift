@@ -8,7 +8,7 @@
 import UIKit
 import AVFoundation
 
-protocol ReelIndex {
+public protocol ReelIndex {
     func updateReelIndex(_ index: Int)
 }
 

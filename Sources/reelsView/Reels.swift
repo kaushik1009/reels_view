@@ -20,7 +20,7 @@ public class Reels: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     private var playerLayer: AVPlayerLayer?
     private var player: AVPlayer?
     private var videoNames: [Any]
-    var delegate: ReelIndex?
+    public var delegate: ReelIndex?
 
     public init(frame: CGRect, videoNames: [Any]) {
         self.videoNames = videoNames
